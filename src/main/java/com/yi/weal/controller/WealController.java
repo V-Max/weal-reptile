@@ -2,6 +2,7 @@ package com.yi.weal.controller;
 
 import com.yi.weal.model.Weal;
 import com.yi.weal.service.WealService;
+import com.yi.weal.utils.MessageResult;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -45,8 +46,10 @@ public class WealController {
      * @return
      */
     @RequestMapping("/findAll")
-    public Iterable<Weal> findAll(){
-        return wealService.searchAll();
+    public MessageResult findAll(){
+        Iterable<Weal> weals = wealService.searchAll();
+
+        return MessageResult.ok(weals);
     }
 
     /**
@@ -55,8 +58,9 @@ public class WealController {
      * @return
      */
     @RequestMapping("/findByTitle")
-    public Iterable<Weal> findByTitle(String title){
-        return wealService.findByTitle(title);
+    public MessageResult findByTitle(String title){
+        Iterable<Weal> weals = wealService.findByTitle(title);
+        return MessageResult.ok(weals);
     }
 
     /**
@@ -65,11 +69,13 @@ public class WealController {
      * @return
      */
     @RequestMapping("/findByTitlePage")
-    public Iterable<Weal> findByTitlePage(String title){
+    public MessageResult findByTitlePage(String title){
         // 分页参数:分页从0开始，clickCount(点击量)倒序
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC,"creationTime");
 
-        return wealService.findByTitle(title, pageable);
+        List<Weal> weals = wealService.findByTitle(title, pageable);
+
+        return MessageResult.ok(weals);
     }
 
     /**
@@ -77,7 +83,7 @@ public class WealController {
      * @return
      */
     @RequestMapping("/templateQuery")
-    public Iterable<Weal> templateQuery(){
+    public MessageResult templateQuery(){
         // 分页参数:分页从0开始，title倒序
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC,"creationTime");
 
@@ -99,6 +105,8 @@ public class WealController {
 
         System.out.println("\n search DSL  = \n " + searchQuery.getQuery().toString());
 
-        return wealService.templateSearchQuery(searchQuery);
+        List<Weal> weals = wealService.templateSearchQuery(searchQuery);
+
+        return MessageResult.ok(weals);
     }
 }
