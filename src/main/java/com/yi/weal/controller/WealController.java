@@ -80,15 +80,16 @@ public class WealController {
 
     /**
      * elasticsearchTemplate自定义查询：创建时间倒叙
+     * @param title 标题
      * @return
      */
     @RequestMapping("/templateQuery")
-    public MessageResult templateQuery(){
+    public MessageResult templateQuery(String title){
         // 分页参数:分页从0开始，title倒序
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC,"creationTime");
 
         // 构建条件为文章内容包含“美女”
-        MatchQueryBuilder q1 = QueryBuilders.matchQuery("title", "美女");
+        MatchQueryBuilder q1 = QueryBuilders.matchQuery("title", title);
 
         BoolQueryBuilder builder1 = QueryBuilders.boolQuery().must(q1);
 
