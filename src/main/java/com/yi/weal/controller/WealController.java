@@ -3,12 +3,14 @@ package com.yi.weal.controller;
 import com.yi.weal.model.Weal;
 import com.yi.weal.service.WealService;
 import com.yi.weal.utils.MessageResult;
+import com.yi.weal.utils.SetHeavyUtil;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,6 +31,7 @@ import java.util.List;
 @RequestMapping("/elasticsearch")
 public class WealController {
     @Autowired
+    @Qualifier("weal")
     WealService wealService;
 
     /**
@@ -48,8 +51,9 @@ public class WealController {
     @RequestMapping("/findAll")
     public MessageResult findAll(){
         Iterable<Weal> weals = wealService.searchAll();
+        List<Weal> lists = SetHeavyUtil.IterableHeavy(weals);
 
-        return MessageResult.ok(weals);
+        return MessageResult.ok(lists);
     }
 
     /**
@@ -60,7 +64,9 @@ public class WealController {
     @RequestMapping("/findByTitle")
     public MessageResult findByTitle(String title){
         Iterable<Weal> weals = wealService.findByTitle(title);
-        return MessageResult.ok(weals);
+        List<Weal> lists = SetHeavyUtil.IterableHeavy(weals);
+
+        return MessageResult.ok(lists);
     }
 
     /**
@@ -74,8 +80,9 @@ public class WealController {
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC,"creationTime");
 
         List<Weal> weals = wealService.findByTitle(title, pageable);
+        List<Weal> lists = SetHeavyUtil.IterableHeavy(weals);
 
-        return MessageResult.ok(weals);
+        return MessageResult.ok(lists);
     }
 
     /**
@@ -107,7 +114,8 @@ public class WealController {
         System.out.println("\n search DSL  = \n " + searchQuery.getQuery().toString());
 
         List<Weal> weals = wealService.templateSearchQuery(searchQuery);
+        List<Weal> lists = SetHeavyUtil.IterableHeavy(weals);
 
-        return MessageResult.ok(weals);
+        return MessageResult.ok(lists);
     }
 }

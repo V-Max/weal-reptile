@@ -10,7 +10,7 @@ import java.util.List;
  * @author YI
  * @date 2018-11-30 10:09:01
  */
-public interface WealService<T> {
+public interface ImageWealService<T> {
 
     /**
      * 保存单个实例

@@ -1,7 +1,7 @@
 package com.yi.weal.service.impl;
 
 import com.yi.weal.config.Config;
-import com.yi.weal.pipeline.ElasticSearchPipeline;
+import com.yi.weal.pipeline.ElasticSearchVideoPipeline;
 import com.yi.weal.service.ReptileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +20,10 @@ import java.util.List;
  * @author YI
  * @date 2018-11-30 10:23:40
  */
-@Service
+@Service("reptile")
 public class ReptileServiceImpl implements PageProcessor, ReptileService {
     @Autowired
-    ElasticSearchPipeline elasticSearchPipeline;
+    ElasticSearchVideoPipeline elasticSearchPipeline;
 
     private static final Logger log = LoggerFactory.getLogger(ReptileServiceImpl.class);
 

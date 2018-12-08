@@ -14,5 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Config {
     public static final String URL_NRC = "http://www.nrcb99.com";
 
+    public static final String meizitu = "https://www.mzitu.com";
+
     public static AtomicInteger nextInc = new AtomicInteger(0);
 }

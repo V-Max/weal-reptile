@@ -17,8 +17,8 @@ import java.util.List;
  * @author YI
  * @date 2018-11-30 10:08:34
  */
-@Service
-public class WealServiceImpl implements WealService {
+@Service("weal")
+public class WealServiceImpl implements WealService<Weal> {
     @Autowired
     private WealSearchRepository wealSearchRepository;
     @Autowired
@@ -48,7 +48,9 @@ public class WealServiceImpl implements WealService {
     public List<Weal> findByTitle(String content, Pageable pageable) {
         Page<Weal> pageageRsutl=wealSearchRepository.findByTitle(content, pageable );
 
-        if (pageageRsutl == null) return null;
+        if (pageageRsutl == null) {
+            return null;
+        }
 
         return pageageRsutl.getContent();
     }
@@ -57,7 +59,9 @@ public class WealServiceImpl implements WealService {
     public List<Weal> searchQuery(SearchQuery searchQuery) {
         Page<Weal> searchPageResults = wealSearchRepository.search(searchQuery);
 
-        if (searchPageResults == null) return null;
+        if (searchPageResults == null) {
+            return null;
+        }
 
         return searchPageResults.getContent();
     }
@@ -65,7 +69,9 @@ public class WealServiceImpl implements WealService {
     @Override
     public List<Weal> templateSearchQuery(SearchQuery searchQuery) {
         List<Weal> weals = elasticsearchTemplate.queryForList(searchQuery, Weal.class);
-        if (weals == null) return null;
+        if (weals == null) {
+            return null;
+        }
 
         return weals;
     }
