@@ -21,9 +21,9 @@ public class Weal implements Serializable {
     private Integer id;
     /**标题*/
     private String title;
-    /**摘要*/
+    /**视频*/
     private String video;
-    /**内容*/
+    /**封面*/
     private String cover;
     /**创建时间*/
     private Date creationTime = new Date();
