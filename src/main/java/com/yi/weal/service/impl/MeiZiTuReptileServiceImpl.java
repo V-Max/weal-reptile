@@ -52,18 +52,8 @@ public class MeiZiTuReptileServiceImpl implements PageProcessor, ReptileService 
 
     @Override
     public void process(Page page) {
-//        List<String> images = new ArrayList<>();
-//
         List<String> urls = page.getHtml().xpath("//*[@id='pins']/li/a/@href").all();
         page.addTargetRequests(urls);
-//
-//        List<String> allPages = page.getHtml().xpath("//*[@class='pagenavi']/a/span/text()").all();
-//
-//        int totalPages = Integer.parseInt(allPages.get(allPages.size() - 2));
-//        for (int i = 1; i <= totalPages; i++) {
-//            page.putField("title", page.getHtml().xpath("//div[@class='main-image']/p/a/@alt").toString());
-//            images.add(page.getHtml().xpath("//div[@class='main-image']/p/a/@href").toString());
-//        }
 
         //这个是提取的主站www.meizitu.com的每个突变的title，
         String webTitle = page.getHtml().xpath("//*[@id=\"maincontent\"]/div[1]/div[1]/h2/a/text()").toString();
